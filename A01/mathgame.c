@@ -34,7 +34,7 @@ int main() {
     }
   }
   
-  printf("You answered %d/%d correctly.", corrAnswers, rounds);
+  printf("You answered %d/%d correctly.\n", corrAnswers, rounds);
   
   return 0;
 }
