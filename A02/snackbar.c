@@ -47,7 +47,7 @@ int main() {
         printf("Sorry, we are out of %s.\n", snack_array[choice].name);
       } else {
         printf("You bought %s.\n", snack_array[choice].name);
-        printf("You have $%d left.\n", remaining);
+        printf("You have $%lf left.\n", remaining);
       }
     }
   }
