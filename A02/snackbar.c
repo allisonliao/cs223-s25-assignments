@@ -39,7 +39,7 @@ int main() {
   if (choice >= sizeof(snack_array)/sizeof(snack_array[0]) || choice < 0) {
     printf("Invalid choice!\n");
   } else {
-    int remaining = money - snack_array[choice].cost;
+    double remaining = money - snack_array[choice].cost;
     if (remaining < 0) {
       printf("You can't afford it!\n");
     } else {
