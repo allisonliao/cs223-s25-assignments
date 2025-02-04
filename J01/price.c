@@ -29,7 +29,7 @@ int main()
    if (arr[1] <= price && arr[1] > arr[0]) {
       strcpy(output, "AI contestant #1 wins the dishwasher!");
    } else { arr[1] = 0;}
-   if (arr[2] <= price && arr[2] > arr[0]) {
+   if (arr[2] <= price && arr[2] > arr[1] && arr[2] > arr[0]) {
       strcpy(output, "AI contestant #2 wins the dishwasher!");
    }
    
