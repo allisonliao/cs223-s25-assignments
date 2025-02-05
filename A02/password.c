@@ -1,6 +1,6 @@
 /***************************************************
  * password.c
- * Author: 
+ * Author: Allison Liao
  * Creates a bad password from input.
  */
 #include <stdio.h>
