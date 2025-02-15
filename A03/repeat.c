@@ -16,6 +16,7 @@ int main() {
   scanf("%d", &count);
 
   char* output = malloc(sizeof(word) * count);
+  memset(output, 0, sizeof(word) * count);
   if (output == NULL) {
     printf("Cannot allocate new string. Exiting...\n");
     return 1;
