@@ -163,7 +163,8 @@ int main() {
   printf("\nSort by quantity:\n");
   head = sortQuantity(head);
   printList(head);
-  
+ 
+  clear(head); 
 
   return 0;
 }
