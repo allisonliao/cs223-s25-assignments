@@ -12,7 +12,7 @@ int fail() {
 }
 
 int main() {
-  int n,m;
+  int n, m;
   scanf("%d %d", &n, &m);
 
   int *array = malloc(sizeof(int) * n * m);
@@ -23,21 +23,31 @@ int main() {
     int rowsum = 0;
     for (int j = 0; j < m; j++) {
       scanf("%d", &array[i * n + j]);
-      rowsum += array[i*n+j];
+      rowsum += array[i * n + j];
     }
-    if (magic_constant == -1) {magic_constant = rowsum;}
-    else if (rowsum != magic_constant) {return fail();}
+    if (magic_constant == -1) {
+      magic_constant = rowsum;
+    } else if (rowsum != magic_constant) {
+      fail();
+      goto label;
+    }
   }
 
   for (int j = 0; j < m; j++) {
     int rowsum = 0;
     for (int i = 0; i < n; i++) {
-      rowsum += array[i*n+j];
+      rowsum += array[i * n + j];
     }
-    if (rowsum != magic_constant) {return fail();}
+    if (rowsum != magic_constant) {
+      fail();
+      goto label;
+    }
   }
 
   printf("M is a magic square (magic constant = %d)\n", magic_constant);
+
+label:
+  free(array);
 
   return 0;
 }
