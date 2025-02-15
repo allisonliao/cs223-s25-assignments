@@ -16,7 +16,7 @@ int main() {
   printf("Number of columns: ");
   scanf("%d",&cols);
 
-  int *grid = malloc(sizeof(char)*rows*cols);
+  int *grid = malloc(sizeof(int)*rows*cols);
 
   if (grid == NULL) {
     printf("Cannot allocate grid. Exiting...\n");
