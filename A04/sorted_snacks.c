@@ -54,7 +54,6 @@ struct node* sortCost(struct node *head) {
     swap = 0;
     struct node* prev = NULL;
     for (struct node* p = head; p != NULL && p->next != NULL; prev = p, p = p->next) {
-      //struct node* next = head->next;
       struct node* temp = p->next;
       if (temp->val.cost < p->val.cost) {
         swap++;
@@ -73,9 +72,55 @@ struct node* sortCost(struct node *head) {
   return head;
 }
 
-int sortName(struct node *head) { return 0; }
+struct node* sortName(struct node *head) { 
+  struct node* p = head;
+  int swap = 1;
+  while (swap) {
+    swap = 0;
+    struct node* prev = NULL;
+    for (struct node* p = head; p != NULL && p->next != NULL; prev = p, p = p->next) {
+      struct node* temp = p->next;
+      if (strcmp(temp->val.name, p->val.name) < 0) {
+        swap++;
+        if (prev == NULL) {
+          p->next = temp->next;
+          temp->next = p;
+          head = temp;
+        } else {
+          p->next = temp->next;
+          temp->next = p;
+          prev->next = temp;
+        }
+      }
+    }
+  }
+  return head;
+}
 
-int sortQuantity(struct node *head) { return 0; }
+struct node* sortQuantity(struct node *head) {
+  struct node* p = head;
+  int swap = 1;
+  while (swap) {
+    swap = 0;
+    struct node* prev = NULL;
+    for (struct node* p = head; p != NULL && p->next != NULL; prev = p, p = p->next) {
+      struct node* temp = p->next;
+      if (temp->val.quantity < p->val.quantity) {
+        swap++;
+        if (prev == NULL) {
+          p->next = temp->next;
+          temp->next = p;
+          head = temp;
+        } else {
+          p->next = temp->next;
+          temp->next = p;
+          prev->next = temp;
+        }
+      }
+    }
+  }
+  return head;
+}
 
 int main() {
   int num;
@@ -107,9 +152,18 @@ int main() {
 
   printList(head);
 
+  printf("\nSort by cost:\n");
   head = sortCost(head);
-
   printList(head);
+
+  printf("\nSort by name:\n");
+  head = sortName(head);
+  printList(head);
+
+  printf("\nSort by quantity:\n");
+  head = sortQuantity(head);
+  printList(head);
+  
 
   return 0;
 }
