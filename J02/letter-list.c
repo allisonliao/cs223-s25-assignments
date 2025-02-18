@@ -30,6 +30,7 @@ void printList(struct node *head, char c) {
     }
     head = head->next;
   }
+  printf("\n");
 }
 
 int clear(struct node *head) {
