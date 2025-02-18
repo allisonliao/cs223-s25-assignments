@@ -38,7 +38,8 @@ int main()
   struct node *head = NULL;
 
   for (int i = strlen(input)-1; i >= 0; i++) {
-    insert_first(head, input[i]);
+    char x = input[i];
+    insert_first(head, x);
   }
 
   while (head != NULL) {
