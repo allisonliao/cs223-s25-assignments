@@ -14,6 +14,24 @@ struct node *insert_first(struct node *head, char data) {
   return new;
 };
 
+void printList(struct node *head, char c) {
+  while (head != NULL) {
+    char curr = head->val;
+    // remove char
+    // if (curr == c) {
+    //   struct node *temp = head->next;
+    //   head->next = temp->next;
+      
+    // }
+
+    // print
+    if (curr != c) {
+      printf("%c",head->val);
+    }
+    head = head->next;
+  }
+}
+
 int clear(struct node *head) {
   struct node *temp = head;
   while (temp->next != NULL) {
@@ -42,21 +60,8 @@ int main()
     head = insert_first(head, x);
   }
 
-  while (head != NULL) {
-    char curr = head->val;
-    // remove char
-    // if (curr == c) {
-    //   struct node *temp = head->next;
-    //   head->next = temp->next;
-      
-    // }
-
-    // print
-    if (curr != c) {
-      printf("%c",head->val);
-    }
-    head = head->next;
-  }
+  printList(head, c);
+  
   clear(head);
   return 0;
 }
