@@ -37,7 +37,7 @@ int main()
 
   struct node *head = NULL;
 
-  for (int i = strlen(input)-1; i >= 0; i++) {
+  for (int i = strlen(input)-1; i >= 0; i--) {
     char x = input[i];
     head = insert_first(head, x);
   }
