@@ -39,7 +39,7 @@ int main()
 
   for (int i = strlen(input)-1; i >= 0; i++) {
     char x = input[i];
-    insert_first(head, x);
+    head = insert_first(head, x);
   }
 
   while (head != NULL) {
