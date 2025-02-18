@@ -17,14 +17,6 @@ struct node *insert_first(struct node *head, char data) {
 void printList(struct node *head, char c) {
   while (head != NULL) {
     char curr = head->val;
-    // remove char
-    // if (curr == c) {
-    //   struct node *temp = head->next;
-    //   head->next = temp->next;
-      
-    // }
-
-    // print
     if (curr != c) {
       printf("%c",head->val);
     }
