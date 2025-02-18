@@ -29,11 +29,11 @@ int main()
 {
   printf("Enter a word: ");
   char input[32];
-  scanf("%s", input);
+  scanf(" %s", input);
 
   printf("Enter a character to remove: ");
   char c;
-  scanf("%c", &c);
+  scanf(" %c", &c);
 
   struct node *head = NULL;
 
