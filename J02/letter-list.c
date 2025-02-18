@@ -57,5 +57,6 @@ int main()
     }
     head = head->next;
   }
+  clear(head);
   return 0;
 }
