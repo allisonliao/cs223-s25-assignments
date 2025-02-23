@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <math.h>
 #include "read_ppm.h"
 #include "write_ppm.h"
 
@@ -25,7 +24,7 @@ int main(int argc, char *argv[]) {
     for (int j = 0; j < w; j++) {
       struct ppm_pixel pixel = pixels[i*w + j];
       float intensity = 1.0/3.0 * (pixel.red + pixel.green + pixel.blue);
-      int idx = floor(intensity/25.5);
+      int idx = (int) intensity/25.5;
       printf("%c", ascii[idx]);
     }
     printf("\n");
