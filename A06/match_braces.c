@@ -49,7 +49,7 @@ int clearStack(struct node *head) {
 };
 
 struct node *pop(struct node *head) {
-  struct node *temp = &head;
+  struct node *temp = head;
   head = head->next;
   return temp;
 };
@@ -61,10 +61,10 @@ struct node *push(struct node *head, struct brace* data) {
 int main(int argc, char** argv)
 {
   FILE* file;
-  file = fopen(argv[0], "r");
+  file = fopen(argv[1], "r");
 
   if (file == NULL) {
-    printf("Cannot open file: %s. Exiting...", argv[0]);
+    printf("Cannot open file: %s. Exiting...", argv[1]);
     return 1;
   }
 
@@ -82,11 +82,11 @@ int main(int argc, char** argv)
     }
     col++;
     if (curr == '{') {
-      struct brace *brace = NULL;
+      struct brace *brace = malloc(sizeof(struct brace));
       brace->type = curr;
       brace->col = col;
       brace->line = line;
-      push(head, brace);
+      head = push(head, brace);
     }
     else if (curr == '}') {
       struct node *popped = pop(head);
@@ -98,6 +98,7 @@ int main(int argc, char** argv)
       } else {
         printf("Found matching braces: (%d, %d) -> (%d, %d)", l, c, line, col);
       }
+      free(popped);
     }
     curr = fgetc(file);
   }
