@@ -101,6 +101,8 @@ int main(int argc, char** argv)
     }
     curr = fgetc(file);
   }
+
+  clearStack(head);
   return 0;
 }
 
