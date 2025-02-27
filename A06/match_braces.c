@@ -49,7 +49,7 @@ int clearStack(struct node *head) {
 };
 
 struct node *pop(struct node *head) {
-  struct node *temp = head;
+  struct node *temp = &head;
   head = head->next;
   return temp;
 };
