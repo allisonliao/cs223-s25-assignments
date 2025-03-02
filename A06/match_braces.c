@@ -39,22 +39,22 @@ void printList(struct node *head, struct brace* c) {
 
 int clearStack(struct node *head) {
   struct node *temp = head;
-  while (temp->next != NULL) {
+  while (temp != NULL) {
     head = temp->next;
     free(temp);
     temp = head;
   }
-  free(temp);
   return 0;
 };
 
-struct node *pop(struct node *head) {
+struct node *pop(struct node **p_head) {
+  struct node* head = *p_head;
   if (head == NULL) {
     printf("Stack underflow error. Exiting...");
     exit(1);
   }
   struct node *temp = head;
-  head = head->next;
+  *p_head = head->next;
   return temp;
 };
 
@@ -76,35 +76,56 @@ int main(int argc, char** argv)
   struct node *head = NULL;
   int curr = fgetc(file);
 
-  int line = 0;
-  int col = 1;
+  int line = 1;
+  int col = -1;
 
   while(curr != -1) {
     if (curr == '\n') {
       line++;
-      col = 0;
+      col = -1;
     }
     col++;
     if (curr == '{') {
       struct brace *brace = malloc(sizeof(struct brace));
+      if (!brace) {
+        printf("Memory allocation failed. Exiting...\n");
+        return 1;
+      }
       brace->type = curr;
       brace->col = col;
       brace->line = line;
       head = push(head, brace);
     }
     else if (curr == '}') {
-      struct node *popped = pop(head);
-      struct brace *popped_val = popped->val;
-      int l = popped_val->line;
-      int c = popped_val->col;
-      if (popped_val->type != '{') {
-        printf("Unmatched brace found on Line %d and Column %d", line, col);
-      } else {
-        printf("Found matching braces: (%d, %d) -> (%d, %d)", l, c, line, col);
+      if (head == NULL) {
+        printf("Unmatched brace found on Line %d and Column %d\n", line, col);
       }
-      free(popped);
+      else {
+        struct node *popped = pop(&head);
+        struct brace *popped_val = popped->val;
+        int l = popped_val->line;
+        int c = popped_val->col;
+        if (popped_val->type != '{') {
+          printf("Unmatched brace found on Line %d and Column %d\n", line, col);
+        } else {
+          printf("Found matching braces: (%d, %d) -> (%d, %d)\n", l, c, line, col);
+        }
+        free(popped->val);
+        free(popped);
+      }
     }
+    
     curr = fgetc(file);
+  }
+
+  while (head != NULL) {
+    struct node *node = pop(&head);
+    struct brace *brace = node->val;
+    int line = brace->line;
+    int col = brace->col;
+    printf("Unmatched brace found on Line %d and Column %d\n", line, col);
+    free(node);
+    free(brace);
   }
 
   clearStack(head);

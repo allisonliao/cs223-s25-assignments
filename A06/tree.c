@@ -1,3 +1,9 @@
+/*----------------------------------------------
+ * Author: Allison Liao
+ * Date: 02/28/25
+ * Implements a binary search tree.
+ ---------------------------------------------*/
+
 #include "tree.h"
 #include "stdio.h"
 #include "stdlib.h"
