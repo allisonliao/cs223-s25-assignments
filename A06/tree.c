@@ -26,6 +26,8 @@ struct tree_node* insert(const char* name, struct tree_node* root) {
   // create new node
   struct tree_node* new = malloc(sizeof(struct tree_node));
   strcpy(new->data.name, name);
+  new->left = NULL;
+  new->right = NULL;
 
   struct tree_node* curr = root;
   while (curr) {
