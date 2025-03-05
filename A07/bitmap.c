@@ -1,6 +1,6 @@
 /*----------------------------------------------
  * Author: Allison Liao
- * Date: 03/07/25
+ * Date: 03/06/25
  * Takes input 64 bit unsigned long, outputs bpp.
  ---------------------------------------------*/
 #include <stdio.h>
