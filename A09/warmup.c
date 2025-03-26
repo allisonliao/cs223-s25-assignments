@@ -5,7 +5,7 @@
  ---------------------------------------------*/
 
 #include <stdio.h>
-#include <sys/_types/_pid_t.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 int main() {
