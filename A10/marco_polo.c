@@ -1,3 +1,8 @@
+/*----------------------------------------------
+ * Author: Allison Liao
+ * Date: 04/05/25
+ * Program that uses signals to coordinate between processes.
+ ---------------------------------------------*/
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
