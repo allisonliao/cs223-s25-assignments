@@ -71,6 +71,7 @@ void* thread(void* p) {
   }
 
   params->count = search(keyword, num_files, v);
+  free(v);
   return NULL;
 }
 
