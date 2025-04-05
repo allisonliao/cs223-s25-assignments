@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 pid_t child_pid = -1;
 pid_t parent_pid = -1;
