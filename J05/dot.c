@@ -49,6 +49,9 @@ int main(int argc, char *argv[]) {
   printf("Test with 4 threads\n");
   pthread_t threads[4];
   struct thread_args** array = malloc(sizeof(struct thread_args*) * 4);
+  for (int i = 0; i < 4; i++) {
+    array[i] = malloc(sizeof(struct thread_args));
+  }
   for(int i = 0; i < 4; i++) {
     struct thread_args* args = array[i];
     //ids[i] = &args;
