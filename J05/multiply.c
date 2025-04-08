@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <string.h>
 
 #define SIZE 100
 
@@ -58,7 +59,7 @@ int main(int argc, char *argv[]) {
     args[i].end = (i == 4 - 1) ? SIZE : (i + 1) * (SIZE/4);
     args[i].m = M;
     args[i].u = u;
-    memset(args[i].product, 0, sizeof(args[i].product));
+    memset(args[i].product, 0, SIZE);
     pthread_create(&threads[i], NULL, thread_multiply, &args[i]);
   }
 
