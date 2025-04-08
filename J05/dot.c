@@ -6,24 +6,21 @@
 
 #define SIZE 100000
 
-// your code here
-
 struct thread_args {
   int *u;
   int *v;
   int start;
   int end;
-  int dot_product;  // This will store the partial result
+  int dot_product; 
 };
 
-// Thread function
 void* thread_dot(void* arg) {
   struct thread_args* data = (struct thread_args*) arg; 
   int sum = 0;
   for (int i = data->start; i < data->end; i++) {
     sum += data->u[i] * data->v[i];
   }
-  data->dot_product = sum;  // Store result in struct field
+  data->dot_product = sum;  
   return NULL;
 }
 
@@ -34,7 +31,6 @@ int main(int argc, char *argv[]) {
   int u[SIZE];
   int dotproduct = 0;
 
-  // Initialize vectors and compute ground truth
   for (int i = 0; i < SIZE; i++) {
     v[i] = rand() % 1000 - 500;
     u[i] = rand() % 1000 - 500;
@@ -43,7 +39,6 @@ int main(int argc, char *argv[]) {
 
   printf("Ground truth dot product: %d\n", dotproduct);
 
-  // Create threads
   printf("Test with 4 threads\n");
   pthread_t threads[4];
   struct thread_args args[4];
