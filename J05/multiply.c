@@ -51,6 +51,10 @@ int main(int argc, char *argv[]) {
   // TODO: Implement your thread solution here
   printf("Test with 4 threads\n");
 
+  for (int i = 0; i < SIZE; i++) {
+    result_threads[i] = 0;
+  }
+
   pthread_t threads[4];
   struct thread_args args[4];
 
@@ -59,16 +63,14 @@ int main(int argc, char *argv[]) {
     args[i].end = (i == 4 - 1) ? SIZE : (i + 1) * (SIZE/4);
     args[i].m = M;
     args[i].u = u;
-    for (int j = 0; j < SIZE; j++) {
-      args[i].product[j] = 0;
-    }
+    args[i].product = result_threads;
+    
     pthread_create(&threads[i], NULL, thread_multiply, &args[i]);
   }
 
   for (int i = 0; i < 4; i++) {
     pthread_join(threads[i], NULL);
     
-    // product += args[i].product;
     for (int j = i * (SIZE/4); j < (i+1)*(SIZE/4); j++) {
       result_threads[j] = args[i].product[j];
     }
