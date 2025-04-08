@@ -13,20 +13,17 @@ struct thread_args {
   int *v;
   int start;
   int end;
-  int dot_product;
+  int dot_product;  // This will store the partial result
 };
 
+// Thread function
 void* thread_dot(void* arg) {
   struct thread_args* data = (struct thread_args*) arg; 
-  int start = data->start;
-  int end = data->end;
-  int dot = data->dot_product;
-  int* u = data->u;
-  int* v = data->v;
-  
-  for (int i = start; i < end; i++) {
-    dot += u[i] * v[i];
+  int sum = 0;
+  for (int i = data->start; i < data->end; i++) {
+    sum += data->u[i] * data->v[i];
   }
+  data->dot_product = sum;  // Store result in struct field
   return NULL;
 }
 
@@ -36,41 +33,37 @@ int main(int argc, char *argv[]) {
   int v[SIZE];
   int u[SIZE];
   int dotproduct = 0;
-   
+
+  // Initialize vectors and compute ground truth
   for (int i = 0; i < SIZE; i++) {
     v[i] = rand() % 1000 - 500;
     u[i] = rand() % 1000 - 500;
     dotproduct += u[i] * v[i];
   }
+
   printf("Ground truth dot product: %d\n", dotproduct);
 
-  // TODO: Implement your thread solution here
-  int thread_dotproduct = 0;
+  // Create threads
   printf("Test with 4 threads\n");
   pthread_t threads[4];
-  struct thread_args** array = malloc(sizeof(struct thread_args*) * 4);
-  for (int i = 0; i < 4; i++) {
-    array[i] = malloc(sizeof(struct thread_args));
-  }
-  for(int i = 0; i < 4; i++) {
-    struct thread_args* args = array[i];
-    //ids[i] = &args;
-    args->start = i * 250;
-    args->end = (i+1) * 250;
-    args->u = u;
-    args->v = v;
-    args->dot_product = 0;
-    pthread_create(&threads[i], NULL, thread_dot, NULL);
-  }
+  struct thread_args args[4];
 
   for (int i = 0; i < 4; i++) {
+    args[i].start = i * 250;
+    args[i].end = (i == 4 - 1) ? SIZE : (i + 1) * 250;
+    args[i].u = u;
+    args[i].v = v;
+    args[i].dot_product = 0;
+    pthread_create(&threads[i], NULL, thread_dot, &args[i]);
+  }
+
+  int thread_dotproduct = 0;
+  for (int i = 0; i < 4; i++) {
     pthread_join(threads[i], NULL);
-    thread_dotproduct += array[i]->dot_product;
+    thread_dotproduct += args[i].dot_product;
   }
 
   printf("Answer with threads: %d\n", thread_dotproduct);
-
-  free(array);
 
   return 0;
 }
