@@ -20,7 +20,7 @@ void* thread_multiply(void* arg) {
   struct thread_args* data = (struct thread_args*) arg; 
   for (int i = data->start; i < data->end; i++) {
     for (int j = 0; j < 100; j++) {
-      data->product[i] += data->u[j] * data->m[i * 100 + j]; // ???
+      data->product[i] += data->u[j] * data->m[i * SIZE + j]; // ???
     }
   }
   return NULL;
@@ -54,11 +54,11 @@ int main(int argc, char *argv[]) {
   struct thread_args args[4];
 
   for (int i = 0; i < 4; i++) {
-    args[i].start = i * 25;
-    args[i].end = (i == 4 - 1) ? SIZE : (i + 1) * 25;
+    args[i].start = i * (SIZE/4);
+    args[i].end = (i == 4 - 1) ? SIZE : (i + 1) * (SIZE/4);
     args[i].m = M;
     args[i].u = u;
-    args[i].product = 0;
+    memset(args[i].product, 0, sizeof(args[i].product));
     pthread_create(&threads[i], NULL, thread_multiply, &args[i]);
   }
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     pthread_join(threads[i], NULL);
     
     // product += args[i].product;
-    for (int j = i * 250; j < (i+1)*250; j++) {
+    for (int j = i * (SIZE/4); j < (i+1)*(SIZE/4); j++) {
       result_threads[j] = args[i].product[j];
     }
   }
