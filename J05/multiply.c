@@ -7,6 +7,7 @@
 #define SIZE 100
 
 // your code here
+struc
 
 int main(int argc, char *argv[]) {
   srand(time(0));
