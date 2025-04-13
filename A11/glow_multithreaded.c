@@ -1,9 +1,10 @@
+#include <assert.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <assert.h>
 #include <time.h>
-#include <pthread.h>
+#include <unistd.h>
+
 #include "read_ppm.h"
 #include "write_ppm.h"
 
@@ -46,7 +47,8 @@ void* process_slice(void* arg) {
       if (brightness > data->threshold) {
         data->bright[idx] = p;
       } else {
-        data->bright[idx].red = data->bright[idx].green = data->bright[idx].blue = 0;
+        data->bright[idx].red = data->bright[idx].green =
+            data->bright[idx].blue = 0;
       }
     }
   }
@@ -104,12 +106,23 @@ int main(int argc, char* argv[]) {
   int opt;
   while ((opt = getopt(argc, argv, ":N:t:b:f:")) != -1) {
     switch (opt) {
-      case 'N': N = atoi(optarg); break;
-      case 't': threshold = atoi(optarg); break;
-      case 'b': blursize = atoi(optarg); break;
-      case 'f': filename = optarg; break;
-      case '?': 
-        printf("usage: %s -N <NumThreads> -t <brightness threshold> -b <box blur size> -f <ppmfile>\n", argv[0]); 
+      case 'N':
+        N = atoi(optarg);
+        break;
+      case 't':
+        threshold = atoi(optarg);
+        break;
+      case 'b':
+        blursize = atoi(optarg);
+        break;
+      case 'f':
+        filename = optarg;
+        break;
+      case '?':
+        printf(
+            "usage: %s -N <NumThreads> -t <brightness threshold> -b <box blur "
+            "size> -f <ppmfile>\n",
+            argv[0]);
         return 1;
     }
   }
@@ -125,24 +138,26 @@ int main(int argc, char* argv[]) {
   struct ppm_pixel* blurred = malloc(sizeof(struct ppm_pixel) * width * height);
   struct ppm_pixel* result = malloc(sizeof(struct ppm_pixel) * width * height);
 
+  memset(bright, 0, sizeof(struct ppm_pixel) * width * height);
+  memset(blurred, 0, sizeof(struct ppm_pixel) * width * height);
+  memset(result, 0, sizeof(struct ppm_pixel) * width * height);
+
   pthread_t* threads = malloc(sizeof(pthread_t) * N);
   ThreadData* thread_data = malloc(sizeof(ThreadData) * N);
 
   int blur_radius = blursize / 2;
 
   for (int i = 0; i < N; ++i) {
-    thread_data[i] = (ThreadData){
-      .thread_id = i,
-      .num_threads = N,
-      .width = width,
-      .height = height,
-      .threshold = threshold,
-      .blur_radius = blur_radius,
-      .original = original,
-      .bright = bright,
-      .blurred = blurred,
-      .result = result
-    };
+    thread_data[i] = (ThreadData){.thread_id = i,
+                                  .num_threads = N,
+                                  .width = width,
+                                  .height = height,
+                                  .threshold = threshold,
+                                  .blur_radius = blur_radius,
+                                  .original = original,
+                                  .bright = bright,
+                                  .blurred = blurred,
+                                  .result = result};
     pthread_create(&threads[i], NULL, process_slice, &thread_data[i]);
   }
 
