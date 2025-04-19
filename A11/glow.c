@@ -1,3 +1,9 @@
+/*----------------------------------------------
+ * Author: Allison Liao
+ * Date: 04/11/25
+ * Applies glow effect to PPM, single-threaded.
+ ---------------------------------------------*/
+
 #include <assert.h>
 #include <pthread.h>
 #include <stdio.h>
