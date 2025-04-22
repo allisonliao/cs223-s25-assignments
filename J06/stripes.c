@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     data[i].width = size;
     data[i].height = size;
     data[i].starti = i * stripe;
-    data[i].endi = (i+1) * stripe;
+    data[i].endi = (i == N - 1) ? size : (i + 1) * stripe;
     data[i].image = image;
     pthread_create(&threads[i], NULL, start, &data[i]);
   }
@@ -64,6 +64,7 @@ int main(int argc, char** argv) {
   }
 
   write_ppm("stripes.ppm", image, size, size);
+
   free(image);
   free(colors);
   free(threads);
